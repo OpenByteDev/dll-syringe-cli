@@ -34,10 +34,10 @@ struct Args {
 }
 
 fn report_error(err: &anyhow::Error) {
-    eprintln!("❌ {}", err);
+    eprintln!("❌ {err}");
     // Print the chain of errors if any:
     for cause in err.chain().skip(1) {
-        eprintln!("    caused by: {}", cause);
+        eprintln!("    caused by: {cause}");
     }
 }
 
@@ -71,10 +71,10 @@ fn is_file_name(path: &Path) -> Result<bool> {
             .join(path)
     };
 
-    return Ok(abs_path.exists());
+    Ok(abs_path.exists())
 }
 
-fn get_file_name(path: &PathBuf) -> Result<String> {
+fn get_file_name(path: &Path) -> Result<String> {
     path.file_name()
         .context("Failed to get file name from path")
         .map(|name| name.to_string_lossy().into_owned())
@@ -126,7 +126,7 @@ fn run() -> Result<()> {
                 // No parent = just a file name, search by name
                 target_process.find_module_by_name(&args.dll)
             }
-            .with_context(|| format!("Failed to check modules in target process"))?
+            .with_context(|| "Failed to check modules in target process".to_string())?
             .with_context(|| format!("DLL '{dll_file_name}' not found in target process",))?;
 
             println!("✅ Found DLL '{}' at {:p}", dll_file_name, module.handle());
