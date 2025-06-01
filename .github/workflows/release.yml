@@ -16,13 +16,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install latest nightly
+        uses: dtolnay/rust-toolchain@nightly
 
       - name: Build release binary
         run: cargo build --release
 
-      - name: Upload GitHub Release
+      - name: Upload gitHub release
         uses: softprops/action-gh-release@v2
         with:
           files: target/release/dll-syringe.exe
