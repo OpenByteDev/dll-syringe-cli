@@ -1,0 +1,13 @@
+[package]
+name = "dll-syringe-cli"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+dll-syringe = { version = "0.16", features = ["into-x86-from-x64"]}
+clap = { version = "4.5", features = ["derive"] }
+anyhow = { version = "1.0" }
+
+[[bin]]
+name = "dll-syringe"
+path = "src/main.rs"
