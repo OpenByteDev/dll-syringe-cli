@@ -14,5 +14,29 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Install latest nightly
+      uses: dtolnay/rust-toolchain@nightly
     - name: Build
       run: cargo build --verbose
+
+  clippy:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install latest nightly
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+            components: clippy
+      - name: Clippy check
+        run: cargo clippy --all-features
+  
+  fmt:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install latest nightly
+      uses: dtolnay/rust-toolchain@nightly
+      with:
+          components: rustfmt
+    - name: Format check
+      run: cargo fmt --all -- --check
