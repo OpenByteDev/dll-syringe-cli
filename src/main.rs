@@ -66,7 +66,9 @@ fn is_file_name(path: &Path) -> Result<bool> {
     let abs_path = if path.is_absolute() {
         path.to_path_buf()
     } else {
-        std::env::current_dir().context("Failed to determine current path")?.join(path)
+        std::env::current_dir()
+            .context("Failed to determine current path")?
+            .join(path)
     };
 
     return Ok(abs_path.exists());
